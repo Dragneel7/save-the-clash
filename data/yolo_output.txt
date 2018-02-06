@@ -1,0 +1,5 @@
+/home/rajkumar/Templates/data/Input/image_test_far.jpg: Predicted in 1.210105 seconds.
+tvmonitor: 69%
+Bounding Box: Left=1381, Top=1570, Right=2035, Bottom=2146
+person: 77%
+Bounding Box: Left=2747, Top=711, Right=3384, Bottom=2483
