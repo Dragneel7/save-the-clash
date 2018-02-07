@@ -1,5 +1,7 @@
 # do you know the way
 
+[Documentation Link](https://github.com/yashagrawal3/save-the-clash/blob/master/DOCUMENTATION.pdf)
+
 This app was created as a part of the online round of Microsoft Code.Fun.Do 2018
 
 Sight is the by far the most essential of all the sensory abilities. But some less fortunate are not able perviece the joy of sight which leads them to a disarray of uncertainity and unpredictability. Our app **Do You Know The Way** aims to reduce this gap between the blind via the use of current technology.
