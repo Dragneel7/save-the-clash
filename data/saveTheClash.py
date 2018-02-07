@@ -13,13 +13,13 @@ file contains the function for the search and view mode.
 def saveTheClash():
 	
 	#load the keyword
-	keyword = open('output_local.txt','r').read() # decides the function to be executed
+	keyword = open('./Data/output_local.txt','r').read() # decides the function to be executed
 	print(keyword)
 	if 'search' in keyword:
 		# (bash script to run the YOLO >> objects_detected.txt)
                 os.chdir('../defaults/darknet')
 		# process the file here and generate the string
-                os.system("./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights ~/Templates/data/Input/image_test_far.jpg >~/Templates/data/yolo_output.txt")
+                os.system("./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights ~/Templates/data/Input/shot.jpg >~/Templates/data/yolo_output.txt")
                 os.chdir('../../data/')
 		output = "is in front of you! "
 		yolo_output = open('./yolo_output.txt','r').read()
@@ -40,13 +40,13 @@ def saveTheClash():
 		detected_objects = []
 		hue = [[243, 234, 49], [112, 55, 168]] # will be an array of pixels
 		os.chdir('../defaults/darknet')
-		subprocess.Popen('./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights ~/Templates/data/Input/image_test_far.jpg >./yolo_output.txt', shell=True)
+		subprocess.Popen('./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights ~/Templates/data/Input/shot.jpg >./yolo_output.txt', shell=True)
 		print("it works")
 		os.chdir('../monodepth')
 		subprocess.call('python monodepth_simple.py --image_path ~/Templates/data/Input/image_test_far.jpg --checkpoint_path ~/Templates/defaults/monodepth/models/model_cityscapes',shell=True)
 		os.chdir('../../data')
 		print("nets ran")
-		stereo_image = Image.open('./Input/image_test_far_disp.png')
+		stereo_image = Image.open('./Input/shot_disp.png')
 		stereo_image = stereo_image.load()
 		coordinates = objects_path()
 		curr_coordinates = coordinates[0]

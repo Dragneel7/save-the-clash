@@ -1,11 +1,13 @@
-#!/usr/bin/env python3
+#
+/usr/bin/env python3
 
-import pyttsx
 import speech_recognition as sr  
 import subprocess
 import multiprocessing
 import time
-from os import system 
+import urllib
+from os import system
+
 
 # install SpeechRecognisation
 # install portaudio
@@ -13,7 +15,6 @@ from os import system
 # link: https://people.csail.mit.edu/hubert/pyaudio/
 
 # get audio from the microphone
-
 r= sr.Recognizer()
 
 def time_delay():
@@ -26,51 +27,57 @@ def audio_output(output):
    system('say '+output)
    return
 
-def listen():
+def listen(counter):
   with sr.Microphone() as source:
      print("Speak:") 
      r.dynamic_energy_threshold = False
      r.energy_threshold = 300
      audio = r.listen(source,  timeout=5)
   try:
-        #recognizes audio
         spoken_string = r.recognize_google(audio)
         print(spoken_string)
 
+        # get image from ipweb:
+        image = urllib.URLopener()
+        image.retrieve("http://192.168.0.16:8080/shot.jpg","./send/shot.jpg")
+        spoken_string = 'search'
         # check for key words
         if 'search' in spoken_string or 'view' in spoken_string:
           print("Saving File .....")
           with open("output_local.txt", "w") as text_file:
               text_file.write(spoken_string)
 
-          print("Sending output file to the server .......")
-          subprocess.call(["scp", "-v", "./output_local.txt", "rajkumar@192.168.173.27:Templates/data"])
           
-          print("Wait for 3 seconds")
+          print("Wait for 5 seconds")
           p = multiprocessing.Process(target=time_delay)
           p.start()
-          p.join(3)  # Wait 3 seconds
+          p.join(5)  # Wait 5 seconds
           # if thread is alive
           if p.is_alive():
              p.terminate()
-             print("Getting file from the server ........")
-             subprocess.call(["scp", "rajkumar@192.168.173.27:~/Templates/data/output.txt",
-                              "./"])
-             # read output file
-             output = open("output.txt", "r").read()
-             audio_output(output)
-             listen()
+
+             print("Sending output file to the server .......")
+             subprocess.call(["scp", "-r", "./send", "rajkumar@192.168.173.27:Templates/data/Input"])
+             if(counter > 0):
+                print("Getting file from the server ........")
+                subprocess.call(["scp", "rajkumar@192.168.173.27:~/Templates/data/output.txt",
+                                 "./"])
+                # read output file
+                output = open("output.txt", "r").read()
+                audio_output(output)
+                listen(counter)
+                counter+=1
         else:
-             listen()
+             listen(counter)
 
   except sr.UnknownValueError:
         print("Could not understand audio")
         # Ask user to speak again
-        listen()
+        listen(counter)
 
   except sr.RequestError as e:
         print("Could not request results; {0}".format(e))
         # Ask user to speak again
-        listen()
+        listen(counter)
 
-listen()
+listen(0)
