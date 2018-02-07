@@ -1,5 +1,4 @@
-#
-/usr/bin/env python3
+#!/usr/bin/env python3
 
 import speech_recognition as sr  
 import subprocess
@@ -28,6 +27,7 @@ def audio_output(output):
    return
 
 def listen(counter):
+  # counter+=1
   with sr.Microphone() as source:
      print("Speak:") 
      r.dynamic_energy_threshold = False
@@ -37,18 +37,18 @@ def listen(counter):
         spoken_string = r.recognize_google(audio)
         print(spoken_string)
 
-        # get image from ipweb:
-        image = urllib.URLopener()
-        image.retrieve("http://192.168.0.16:8080/shot.jpg","./send/shot.jpg")
-        spoken_string = 'search'
         # check for key words
         if 'search' in spoken_string or 'view' in spoken_string:
+          # get image from ipweb:
+          image = urllib.URLopener()
+          image.retrieve("http://172.30.28.124:8080/shot.jpg","./send/shot.jpg")
           print("Saving File .....")
-          with open("output_local.txt", "w") as text_file:
+          with open("./send/output_local.txt", "w") as text_file:
               text_file.write(spoken_string)
 
-          
-          print("Wait for 5 seconds")
+          print("Sending output file to the server .......")
+          subprocess.call(["scp", "-r", "./send", "rajkumar@192.168.173.27:Templates/we-dont-know-da-wae/data/Input"])
+          # print("Wait for 3 seconds")
           p = multiprocessing.Process(target=time_delay)
           p.start()
           p.join(5)  # Wait 5 seconds
@@ -56,28 +56,29 @@ def listen(counter):
           if p.is_alive():
              p.terminate()
 
-             print("Sending output file to the server .......")
-             subprocess.call(["scp", "-r", "./send", "rajkumar@192.168.173.27:Templates/data/Input"])
-             if(counter > 0):
+             print(counter)
+             if(counter > -1):
                 print("Getting file from the server ........")
-                subprocess.call(["scp", "rajkumar@192.168.173.27:~/Templates/data/output.txt",
+                subprocess.call(["scp", "rajkumar@192.168.173.27:~/Templates/we-dont-know-da-wae/data/output.txt",
                                  "./"])
                 # read output file
                 output = open("output.txt", "r").read()
-                audio_output(output)
-                listen(counter)
-                counter+=1
+                print(output)
+                if(output != ''):
+                   audio_output(output)
+             counter+=1
+             listen(counter)
         else:
              listen(counter)
 
   except sr.UnknownValueError:
         print("Could not understand audio")
         # Ask user to speak again
-        listen(counter)
+        listen(0)
 
   except sr.RequestError as e:
         print("Could not request results; {0}".format(e))
         # Ask user to speak again
-        listen(counter)
+        listen(0)
 
 listen(0)
