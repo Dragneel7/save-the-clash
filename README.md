@@ -1,10 +1,10 @@
-# do you know the way
+# Save the Clash
 
 [Documentation Link](https://github.com/yashagrawal3/save-the-clash/blob/master/DOCUMENTATION.pdf)
 
 This app was created as a part of the online round of Microsoft Code.Fun.Do 2018
 
-Sight is the by far the most essential of all the sensory abilities. But some less fortunate are not able perviece the joy of sight which leads them to a disarray of uncertainity and unpredictability. Our app **Do You Know The Way** aims to reduce this gap between the blind via the use of current technology.
+Sight is the by far the most essential of all the sensory abilities. But some less fortunate are not able perviece the joy of sight which leads them to a disarray of uncertainity and unpredictability. Our app **Save the Clash** aims to reduce this gap between the blind via the use of current technology.
 
 We use 2 State of the art Convoluation Nueral Networks ( YOLO and MONODEPTH ) and tackle this problem with a new approach. The app works by sending the images captured from the smartphone of the user to a MiddleMan pc which then transfers the image to the a server with GPU support.
 The Speed of processing can vary from machine to machine speeding from 2frames/s to even 1frame/10s for slow CPU computations. The appraoch gave a proficient result of 1frame/2sec on our sytem using GM107GL [Quadro K620] GPU.
