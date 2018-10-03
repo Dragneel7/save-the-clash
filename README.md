@@ -14,7 +14,7 @@ The two networks work in harmony and notify the user about an object when it ent
 ![alt text](https://github.com/yashagrawal3/save-the-clash/blob/master/static/SaveTheClash.png "SaveTheClash")
 
 ## Setup:
-1. Install an app that transfer image or video file from your smartphone to your pc or any hardware able to run a script and providing SCP support. We have used [IPWEBCAM](https://play.google.com/store/apps/details?id=com.pas.webcam&hl=en) for this purpose.
+1. Install an app that can transfer image or video file from your smartphone to your pc or any hardware that is able to run a script and provide SCP support. We have used [IPWEBCAM](https://play.google.com/store/apps/details?id=com.pas.webcam&hl=en) for this purpose.
 
 2. Download the two CNNs:
   - [YOLO](https://github.com/pjreddie/darknet) object detection net: Download weights for tiny-yolo.
@@ -25,11 +25,11 @@ The two networks work in harmony and notify the user about an object when it ent
                       while inotifywait -e create ~/<input_folder_path>;
                        do ./saveTheClash.py;
                        done;`
-    this command sets up an watch and process the input image when it it is recieved. Here, The `<input_folder_path>` is in data folder and stores the incoming data from the user.
+    these command sets up a watch and process the input image when it is recieved. Here, The `<input_folder_path>` is in the data folder and stores the incoming data from the user.
 
 4. Run the file `middleMan.py` on the device that recieve images from the smartphone from `ipwebcam`.
  
 Follow the above steps and you are good to go.
 
 
-The app is still far from complete, but we believe that our small step in the direction for the cause can cause major advancement in the future. Please feel free to contribute. 
+The app is still far from completion, but we believe that our small step in this direction, for the cause can result in major advancement in the future. Please feel free to contribute. 
